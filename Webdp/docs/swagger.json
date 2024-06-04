@@ -3,11 +3,7 @@
     "info": {
         "description": "Welcome to the official OpenAPI documentation for WebDP, our versatile API designed to provide transparent interoperability with a range of differentially private frameworks.",
         "title": "Webdp API - Reworked",
-        "contact": {
-            "name": "API Support",
-            "url": "http://www.none.com",
-            "email": "none@none.com"
-        },
+        "contact": {},
         "license": {
             "name": "Mozilla Public License version 2.0",
             "url": "https://www.mozilla.org/en-US/MPL/2.0/"
@@ -696,7 +692,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.TokenResponse"
+                            "$ref": "#/definitions/response.Token"
                         }
                     },
                     "400": {
@@ -1848,7 +1844,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.TokenResponse"
+                            "$ref": "#/definitions/response.Token"
                         }
                     },
                     "400": {
@@ -2788,12 +2784,6 @@
                 }
             }
         },
-        "handlers.TokenResponse": {
-            "type": "object",
-            "additionalProperties": {
-                "type": "string"
-            }
-        },
         "response.AllFunctions": {
             "type": "object",
             "properties": {
@@ -2865,6 +2855,14 @@
             "properties": {
                 "id": {
                     "type": "integer"
+                }
+            }
+        },
+        "response.Token": {
+            "type": "object",
+            "properties": {
+                "jwt": {
+                    "type": "string"
                 }
             }
         }

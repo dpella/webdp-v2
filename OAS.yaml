@@ -33,7 +33,6 @@ paths:
       - auth
       summary: Login User
       description: Login user with user/password credentials.
-      security: []
       requestBody:
         description: Login Request
         content:
@@ -47,7 +46,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/handlers.TokenResponse'
+                $ref: '#/components/schemas/response.Token'
         default:
           $ref: "#/components/responses/Error"
       x-codegen-request-body-name: loginRequest
@@ -69,7 +68,6 @@ paths:
       - auth
       summary: Login User
       description: Login user with user/password credentials.
-      security: []
       requestBody:
         description: Login Request
         content:
@@ -83,7 +81,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/handlers.TokenResponse'
+                $ref: '#/components/schemas/response.Token'
         default:
           $ref: "#/components/responses/Error"
       x-codegen-request-body-name: loginRequest
@@ -1355,10 +1353,6 @@ components:
             type: string
         updated_time:
           type: string
-    handlers.TokenResponse:
-      type: object
-      additionalProperties:
-        type: string
     response.AllFunctions:
       type: object
       properties:
@@ -1407,6 +1401,11 @@ components:
       properties:
         id:
           type: integer
+    response.Token:
+      type: object
+      properties:
+        jwt:
+          type: string
   securitySchemes:
     BearerTokenAuth:
       type: http

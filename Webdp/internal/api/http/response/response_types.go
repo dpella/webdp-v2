@@ -4,6 +4,10 @@ package response
 This is mostly for OAS generation.
 */
 
+type Token struct {
+	Token string `json:"jwt"`
+}
+
 type Error struct {
 	Title  string `json:"title"`
 	Detail string `json:"detail"`

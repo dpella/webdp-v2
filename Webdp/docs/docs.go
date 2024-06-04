@@ -9,11 +9,7 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {
-            "name": "API Support",
-            "url": "http://www.none.com",
-            "email": "none@none.com"
-        },
+        "contact": {},
         "license": {
             "name": "Mozilla Public License version 2.0",
             "url": "https://www.mozilla.org/en-US/MPL/2.0/"
@@ -702,7 +698,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.TokenResponse"
+                            "$ref": "#/definitions/response.Token"
                         }
                     },
                     "400": {
@@ -1854,7 +1850,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/handlers.TokenResponse"
+                            "$ref": "#/definitions/response.Token"
                         }
                     },
                     "400": {
@@ -2794,12 +2790,6 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.TokenResponse": {
-            "type": "object",
-            "additionalProperties": {
-                "type": "string"
-            }
-        },
         "response.AllFunctions": {
             "type": "object",
             "properties": {
@@ -2871,6 +2861,14 @@ const docTemplate = `{
             "properties": {
                 "id": {
                     "type": "integer"
+                }
+            }
+        },
+        "response.Token": {
+            "type": "object",
+            "properties": {
+                "jwt": {
+                    "type": "string"
                 }
             }
         }

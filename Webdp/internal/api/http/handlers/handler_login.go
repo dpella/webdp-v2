@@ -31,7 +31,7 @@ func NewLoginHandler(userService services.UserService, tokenService services.Tok
 // @Accept       json
 // @Produce      json
 // @Param		 loginRequest 	body	entity.LoginRequest	true  "Login Request"
-// @Success      200  {object}  TokenResponse
+// @Success      200  {object}  response.Token
 // @Failure      400  {object}  response.Error
 // @Failure      401  {object}  response.Error
 // @Failure      500  {object}  response.Error

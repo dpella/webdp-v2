@@ -169,10 +169,6 @@ definitions:
       updated_time:
         type: string
     type: object
-  handlers.TokenResponse:
-    additionalProperties:
-      type: string
-    type: object
   response.AllFunctions:
     properties:
       engine1:
@@ -220,12 +216,14 @@ definitions:
       id:
         type: integer
     type: object
+  response.Token:
+    properties:
+      jwt:
+        type: string
+    type: object
 host: localhost:8000
 info:
-  contact:
-    email: none@none.com
-    name: API Support
-    url: http://www.none.com
+  contact: {}
   description: Welcome to the official OpenAPI documentation for WebDP, our versatile
     API designed to provide transparent interoperability with a range of differentially
     private frameworks.
@@ -674,7 +672,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.TokenResponse'
+            $ref: '#/definitions/response.Token'
         "400":
           description: Bad Request
           schema:
@@ -1419,7 +1417,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/handlers.TokenResponse'
+            $ref: '#/definitions/response.Token'
         "400":
           description: Bad Request
           schema:
