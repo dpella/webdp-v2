@@ -118,6 +118,13 @@ There are two demos available. The first demo is examples of different queries r
 - [Demo 1](demo/demo.ipynb)
 - [Demo 2](demo/presentation_demo.ipynb)
 
+## Report
+You can read our project report [here](report/WebDP_report.pdf)
+
+## FrontDP
+A frontend for WebDP has also been developed by another bachelors project group which you can find [here](https://github.com/dpella/frontdp).
+The v1 of this backend is fully compatible with FrontDP.
+
 ## Who we are
 We are a team of students from the Department of Computer Science and Engineering at Chalmers University of Technology and University of Gothenburg. Our team consists of the following five members:
 - [DAVID AL AMIRI](https://github.com/Thefriendlymoose)
