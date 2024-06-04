@@ -1,0 +1,91 @@
+[
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : -1.0
+        },
+        "query" : [
+            {
+                "count" : {}
+            }
+        ]
+    },
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 1.0, "delta" : -0.1
+        },
+        "query" : [
+            {
+                "count" : {}
+            }
+        ]
+    },
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 1.0
+        },
+        "query" : [
+            {
+                "count" : {
+                    "budget" : {"epsilon" : 0.5}
+                }
+            }
+        ]
+    },
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 1.0
+        },
+        "query" : [
+            {
+                "count" : {
+                    "budget" : {"epsilon" : 1.1}
+                }
+            }
+        ]
+    },
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 1.0
+        },
+        "query" : [
+            {
+                "count" : {
+                    "budget" : {"epsilon" : -0.1}
+                }
+            },
+            {
+                "count" : {
+                    "budget" : {"epsilon" : 1.1}
+                }
+            }
+        ]
+    },
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 0.0
+        },
+        "query" : [
+            {
+                "count" : {}
+            }
+        ]
+    },
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 0.0
+        },
+        "query" : [
+            {
+                "count" : {"budget" : {"epsilon" : 0.0}}
+            }
+        ]
+    }
+
+]

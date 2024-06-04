@@ -1,0 +1,48 @@
+{
+    "rename": {
+        "enabled": true,
+        "required_fields": {
+            "mapping": "A mapping of columns to new column names. Columns not specified in the mapper will remain the same."
+        }
+    },
+    "filter": {
+        "enabled": true,
+        "required_fields": {
+            "key": "the key should be 'filter'", 
+            "value": "An array that contains predicates 'column < 20'"
+        }
+    },
+    "bin": {
+        "enabled": true,
+        "required_fields": {
+            "key": "the key name should be the column",
+            "value": "the value should be an array with ints that specify the bins"
+        }
+    },
+    "select": {
+        "enabled": true,
+        "required_fields": {
+            "columns": "the columns to select, in a list"
+        }
+    },
+    "sum": {
+        "enabled": true,
+        "required_fields": {
+            "column": "which column in the dataset to measure",
+            "mech": "Laplace or Gaussian"
+        },
+        "optional_fields": {
+            "budget": "the budget requested for this measurement"
+        }
+    },
+    "count": {
+        "enabled": true,
+        "required_fields": {
+            "column": "which column in the dataset to measure",
+            "mech": "Laplace or Gaussian"
+        },
+        "optional_fields": {
+            "budget": "the budget requested for this measurement"
+        }
+    }
+}

@@ -1,0 +1,32 @@
+{   
+    "default": "tumult",
+    "engines": [
+        {
+            "name" : "tumult",
+            "evaluate_url" : "http://tumult:8000/evaluate",
+            "accuracy_url" : "",
+            "delete_url" : "http://tumult:8000/cache",
+            "validation_url" : "http://tumult:8000/validate",
+            "functions_url" : "http://tumult:8000/functions",
+            "documentation_url" : "http://tumult:8000/documentation"
+        },
+        {
+            "name" : "opendp",
+            "evaluate_url" : "http://opendp:8000/evaluate",
+            "accuracy_url" : "http://opendp:8000/accuracy",
+            "delete_url" : "http://opendp:8000/cache",
+            "validation_url" : "http://opendp:8000/validate",
+            "functions_url" : "http://opendp:8000/functions",
+            "documentation_url" : "http://opendp:8000/documentation"
+        },
+        {
+            "name" : "googledp",
+            "evaluate_url" : "http://googledp:8000/evaluate",
+            "accuracy_url" : "",
+            "delete_url" : "http://googledp:8000/cache",
+            "validation_url" : "http://googledp:8000/validate",
+            "functions_url" : "http://googledp:8000/functions",
+            "documentation_url" : "http://googledp:8000/documentation"
+        }
+    ]
+}

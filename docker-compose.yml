@@ -1,0 +1,81 @@
+services:
+  # SERVER
+  api:
+    container_name: webdp-api
+    volumes:
+      - ./Webdp/deployment/dp-engines-config.json:/dpconfig/config.json
+    networks:
+      - dpnet
+      - postnet
+    build:
+      context: ./Webdp
+      dockerfile: deployment/Dockerfile
+    ports:
+      - 8000:8000
+    expose:
+      - "8001"
+    environment:
+      - PORT=8000
+      - INTERNAL_PORT=8001
+      - CONFIG_PATH=/dpconfig/config.json
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=${D_USER}
+      - DB_PASSWORD=${D_PASS}
+      - DB_NAME=${DB_NAME}
+      - AUTH_SIGN_KEY=${AUTH_SIGN_KEY}
+      - ROOT_PASSWORD=${ROOT_PASSWORD}
+    depends_on:
+      - postgres
+
+  # DATABASE
+  postgres:
+    networks:
+      - postnet
+    image: postgres:16.2-alpine3.19
+    environment:
+      - POSTGRES_USER=${D_USER}
+      - POSTGRES_PASSWORD=${D_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    restart: always
+    expose:
+      - "5432"
+    volumes:
+      - ./Webdp/deployment/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # CONNECTORS
+  tumult:
+    networks:
+      - dpnet
+    build:
+      context: ./Engines/tumult
+      dockerfile: Dockerfile
+    expose:
+     - "8000"
+  opendp:
+    container_name: opendp
+    networks:
+      - dpnet
+    build:
+      context: ./Engines/opendp
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+  googledp:
+    container_name: googledp
+    networks:
+      - dpnet
+    build:
+      context: ./Engines/googledp
+      dockerfile: Dockerfile
+    expose:
+      - "8000"
+
+# NETWORKS     
+networks:
+  dpnet:
+    name: dpnet
+    driver: bridge
+  postnet:
+    name: postnet
+    driver: bridge

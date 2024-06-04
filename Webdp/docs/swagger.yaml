@@ -1,0 +1,1870 @@
+basePath: /
+definitions:
+  client.ValidateResponse:
+    properties:
+      status:
+        type: string
+      valid:
+        type: boolean
+    type: object
+  entity.Budget:
+    properties:
+      delta:
+        type: number
+      epsilon:
+        type: number
+    type: object
+  entity.ColumnSchema:
+    properties:
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/entity.DataType'
+    type: object
+  entity.DataType:
+    properties:
+      type: {}
+    type: object
+  entity.DatasetBudgetAllocationResponse:
+    properties:
+      allocated:
+        $ref: '#/definitions/entity.Budget'
+      allocation:
+        items:
+          $ref: '#/definitions/entity.UserBudgetModel'
+        type: array
+      consumed:
+        $ref: '#/definitions/entity.Budget'
+      total:
+        $ref: '#/definitions/entity.Budget'
+    type: object
+  entity.DatasetCreate:
+    properties:
+      name:
+        type: string
+      owner:
+        type: string
+      privacy_notion:
+        type: string
+      schema:
+        items:
+          $ref: '#/definitions/entity.ColumnSchema'
+        type: array
+      total_budget:
+        $ref: '#/definitions/entity.Budget'
+    type: object
+  entity.DatasetInfo:
+    properties:
+      created_time:
+        type: string
+      id:
+        type: integer
+      loaded:
+        type: boolean
+      loaded_time:
+        type: string
+      name:
+        type: string
+      owner:
+        type: string
+      privacy_notion:
+        type: string
+      schema:
+        items:
+          $ref: '#/definitions/entity.ColumnSchema'
+        type: array
+      total_budget:
+        $ref: '#/definitions/entity.Budget'
+      updated_time:
+        type: string
+    type: object
+  entity.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  entity.Query:
+    properties:
+      querySteps:
+        items: {}
+        type: array
+    type: object
+  entity.QueryAccuracy:
+    properties:
+      budget:
+        $ref: '#/definitions/entity.Budget'
+      confidence:
+        type: number
+      dataset:
+        type: integer
+      query:
+        $ref: '#/definitions/entity.Query'
+    type: object
+  entity.QueryCustom:
+    properties:
+      budget:
+        $ref: '#/definitions/entity.Budget'
+      dataset:
+        type: integer
+      query:
+        type: string
+    type: object
+  entity.QueryEvaluate:
+    properties:
+      budget:
+        $ref: '#/definitions/entity.Budget'
+      dataset:
+        type: integer
+      query:
+        $ref: '#/definitions/entity.Query'
+    type: object
+  entity.QueryResult:
+    additionalProperties: true
+    type: object
+  entity.UserBudgetModel:
+    properties:
+      allocated:
+        $ref: '#/definitions/entity.Budget'
+      consumed:
+        $ref: '#/definitions/entity.Budget'
+      user:
+        type: string
+    type: object
+  entity.UserBudgetsResponse:
+    properties:
+      allocated:
+        $ref: '#/definitions/entity.Budget'
+      consumed:
+        $ref: '#/definitions/entity.Budget'
+      dataset:
+        type: integer
+    type: object
+  entity.UserPost:
+    properties:
+      handle:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+    type: object
+  entity.UserResponse:
+    properties:
+      created_time:
+        type: string
+      handle:
+        type: string
+      name:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+      updated_time:
+        type: string
+    type: object
+  handlers.TokenResponse:
+    additionalProperties:
+      type: string
+    type: object
+  response.AllFunctions:
+    properties:
+      engine1:
+        $ref: '#/definitions/response.EngineFunctions'
+      engine2:
+        $ref: '#/definitions/response.EngineFunctions'
+    type: object
+  response.EngineFunctions:
+    properties:
+      feature1:
+        $ref: '#/definitions/response.Function'
+      feature2:
+        $ref: '#/definitions/response.Function'
+      feature3:
+        $ref: '#/definitions/response.Function'
+    type: object
+  response.Error:
+    properties:
+      detail:
+        type: string
+      status:
+        type: integer
+      title:
+        type: string
+      type:
+        type: string
+    type: object
+  response.Function:
+    properties:
+      enabled:
+        type: boolean
+      optional_fields:
+        properties:
+          options:
+            type: string
+        type: object
+      required_fields:
+        properties:
+          options:
+            type: string
+        type: object
+    type: object
+  response.Id:
+    properties:
+      id:
+        type: integer
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: none@none.com
+    name: API Support
+    url: http://www.none.com
+  description: Welcome to the official OpenAPI documentation for WebDP, our versatile
+    API designed to provide transparent interoperability with a range of differentially
+    private frameworks.
+  license:
+    name: Mozilla Public License version 2.0
+    url: https://www.mozilla.org/en-US/MPL/2.0/
+  title: Webdp API - Reworked
+  version: "2.0"
+paths:
+  /v1/budget/allocation/{userHandle}/{datasetId}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes budget for user and dataset.
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Deletes budget for user and dataset.
+      tags:
+      - budgets
+    get:
+      consumes:
+      - application/json
+      description: Gets the specified users budget on a specific dataset
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Budget'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Gets user budget on a dataset
+      tags:
+      - budgets
+    patch:
+      consumes:
+      - application/json
+      description: Update a user budget on a dataset
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      - description: request body
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Budget'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Update a user budget on a dataset
+      tags:
+      - budgets
+    post:
+      consumes:
+      - application/json
+      description: Adds a user budget on a dataset
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      - description: request body
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Budget'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Adds a user budget on a dataset
+      tags:
+      - budgets
+  /v1/budget/dataset/{datasetId}:
+    get:
+      consumes:
+      - application/json
+      description: Gets the dataset budget allocation
+      parameters:
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.DatasetBudgetAllocationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Gets dataset budget for a dataset
+      tags:
+      - budgets
+  /v1/budget/user/{userHandle}:
+    get:
+      consumes:
+      - application/json
+      description: Gets all budgets that are allocated to the user
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.UserBudgetsResponse'
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Get budgets for user
+      tags:
+      - budgets
+  /v1/dataset/{datasetId}:
+    delete:
+      consumes:
+      - application/json
+      description: Requester needs to be the owner of the dataset.
+      parameters:
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Delete a dataset.
+      tags:
+      - datasets
+    get:
+      consumes:
+      - application/json
+      description: Requester needs role admin or curator, or needs granted access
+        via budget allocation.
+      parameters:
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.DatasetInfo'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Gets all datasets which requester has access to.
+      tags:
+      - datasets
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Update name, owner or total budget of a dataset.
+        Requester needs to be curator and owner of the dataset.
+      parameters:
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      - description: request body
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/entity.DatasetCreate'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Update a dataset.
+      tags:
+      - datasets
+  /v1/dataset/{datasetId}/upload:
+    post:
+      consumes:
+      - application/json
+      description: Requester needs to be the owner of the dataset.
+      parameters:
+      - description: CSV Data
+        in: body
+        name: csvData
+        required: true
+        schema:
+          type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Upload a dataset.
+      tags:
+      - datasets
+  /v1/datasets:
+    get:
+      consumes:
+      - application/json
+      description: Requester needs role admin or curator, or needs granted access
+        via budget allocation.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.DatasetInfo'
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Gets all datasets which requester has access to.
+      tags:
+      - datasets
+    post:
+      consumes:
+      - application/json
+      description: Requester needs role curator. New owner of dataset needs role curator.
+      parameters:
+      - description: request body
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/entity.DatasetCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Id'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Creates a dataset.
+      tags:
+      - datasets
+  /v1/login:
+    post:
+      consumes:
+      - application/json
+      description: Login user with user/password credentials.
+      parameters:
+      - description: Login Request
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/entity.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Login User
+      tags:
+      - auth
+  /v1/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout user from session.
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Logout User
+      tags:
+      - auth
+  /v1/query/accuracy:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Request query accuracy on a specific dataset.
+        Requester must be curator or analyst.
+      parameters:
+      - description: Query Accuracy Request
+        in: body
+        name: queryAccuracy
+        required: true
+        schema:
+          $ref: '#/definitions/entity.QueryAccuracy'
+      - description: engine name
+        in: query
+        name: engine
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: number
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Check a query's accuracy
+      tags:
+      - queries
+  /v1/query/custom:
+    post:
+      consumes:
+      - application/json
+      description: Custom query on a specific dataset
+      parameters:
+      - description: Query Custom Request
+        in: body
+        name: queryCustom
+        required: true
+        schema:
+          $ref: '#/definitions/entity.QueryCustom'
+      produces:
+      - application/json
+      responses:
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Do a custom query (not implemented)
+      tags:
+      - queries
+  /v1/query/evaluate:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Request a query evaluation on a specific dataset.
+        Requester must be curator or analyst.
+      parameters:
+      - description: Query Evaluation Request
+        in: body
+        name: queryEvaluate
+        required: true
+        schema:
+          $ref: '#/definitions/entity.QueryEvaluate'
+      - description: engine name
+        in: query
+        name: engine
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.QueryResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Do a query evaluation
+      tags:
+      - queries
+  /v1/user/{userHandle}:
+    delete:
+      consumes:
+      - application/json
+      description: Requester needs admin role.
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Delete a user.
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Requester needs admin or curator roles.
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.UserResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Get a user.
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Update name, password and roles of a user.
+        Requester needs admin role.
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Update a user.
+      tags:
+      - users
+  /v1/users:
+    get:
+      consumes:
+      - application/json
+      description: Requester needs admin or curator roles.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.UserResponse'
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Get all users.
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Requester needs admin role.
+      parameters:
+      - description: User Request
+        in: body
+        name: userRequest
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UserPost'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Create new user.
+      tags:
+      - users
+  /v2/budgets/allocations/{userHandle}/{datasetId}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes budget for user and dataset.
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Deletes budget for user and dataset.
+      tags:
+      - budgets
+    get:
+      consumes:
+      - application/json
+      description: Gets the specified users budget on a specific dataset
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Budget'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Gets user budget on a dataset
+      tags:
+      - budgets
+    patch:
+      consumes:
+      - application/json
+      description: Update a user budget on a dataset
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      - description: request body
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Budget'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Update a user budget on a dataset
+      tags:
+      - budgets
+    post:
+      consumes:
+      - application/json
+      description: Adds a user budget on a dataset
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      - description: request body
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/entity.Budget'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Adds a user budget on a dataset
+      tags:
+      - budgets
+  /v2/budgets/datasets/{datasetId}:
+    get:
+      consumes:
+      - application/json
+      description: Gets the dataset budget allocation
+      parameters:
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.DatasetBudgetAllocationResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Gets dataset budget for a dataset
+      tags:
+      - budgets
+  /v2/budgets/users/{userHandle}:
+    get:
+      consumes:
+      - application/json
+      description: Gets all budgets that are allocated to the user
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.UserBudgetsResponse'
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Get budgets for user
+      tags:
+      - budgets
+  /v2/datasets:
+    get:
+      consumes:
+      - application/json
+      description: Requester needs role admin or curator, or needs granted access
+        via budget allocation.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.DatasetInfo'
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Gets all datasets which requester has access to.
+      tags:
+      - datasets
+    post:
+      consumes:
+      - application/json
+      description: Requester needs role curator. New owner of dataset needs role curator.
+      parameters:
+      - description: request body
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/entity.DatasetCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.Id'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Creates a dataset.
+      tags:
+      - datasets
+  /v2/datasets/{datasetId}:
+    delete:
+      consumes:
+      - application/json
+      description: Requester needs to be the owner of the dataset.
+      parameters:
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Delete a dataset.
+      tags:
+      - datasets
+    get:
+      consumes:
+      - application/json
+      description: Requester needs role admin or curator, or needs granted access
+        via budget allocation.
+      parameters:
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.DatasetInfo'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Gets all datasets which requester has access to.
+      tags:
+      - datasets
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Update name, owner or total budget of a dataset.
+        Requester needs to be curator and owner of the dataset.
+      parameters:
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      - description: request body
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/entity.DatasetCreate'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Update a dataset.
+      tags:
+      - datasets
+  /v2/datasets/{datasetId}/upload:
+    post:
+      consumes:
+      - application/json
+      description: Requester needs to be the owner of the dataset.
+      parameters:
+      - description: CSV Data
+        in: body
+        name: csvData
+        required: true
+        schema:
+          type: string
+      - description: Dataset Id
+        in: path
+        name: datasetId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Upload a dataset.
+      tags:
+      - datasets
+  /v2/login:
+    post:
+      consumes:
+      - application/json
+      description: Login user with user/password credentials.
+      parameters:
+      - description: Login Request
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/entity.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      summary: Login User
+      tags:
+      - auth
+  /v2/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logout user from session.
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Logout User
+      tags:
+      - auth
+  /v2/queries/accuracy:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Request query accuracy on a specific dataset.
+        Requester must be curator or analyst.
+      parameters:
+      - description: Query Accuracy Request
+        in: body
+        name: queryAccuracy
+        required: true
+        schema:
+          $ref: '#/definitions/entity.QueryAccuracy'
+      - description: engine name
+        in: query
+        name: engine
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: number
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Check a query's accuracy
+      tags:
+      - queries
+  /v2/queries/docs:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Returns a markdown file with features for each engine
+        or single engine if specified in query param
+      parameters:
+      - description: engine name
+        in: query
+        name: engine
+        type: string
+      produces:
+      - text/markdown
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: integer
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Get engine query documentation
+      tags:
+      - queries
+  /v2/queries/engines:
+    get:
+      consumes:
+      - application/json
+      description: Returns a list of available engines.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: List available engines
+      tags:
+      - queries
+  /v2/queries/evaluate:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Request a query evaluation on a specific dataset.
+        Requester must be curator or analyst.
+      parameters:
+      - description: Query Evaluation Request
+        in: body
+        name: queryEvaluate
+        required: true
+        schema:
+          $ref: '#/definitions/entity.QueryEvaluate'
+      - description: engine name
+        in: query
+        name: engine
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.QueryResult'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Do a query evaluation
+      tags:
+      - queries
+  /v2/queries/functions:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Returns a json with supported functions for each engine
+        or single engine if specified in query param
+      parameters:
+      - description: engine name
+        in: query
+        name: engine
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.EngineFunctions'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: List engine functions
+      tags:
+      - queries
+  /v2/queries/validate:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Validate a query's syntax.
+        Requester must be curator or analyst.
+      parameters:
+      - description: Query Evaluation Request
+        in: body
+        name: queryEvaluate
+        required: true
+        schema:
+          $ref: '#/definitions/entity.QueryEvaluate'
+      - description: engine name
+        in: query
+        name: engine
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/client.ValidateResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Validate a query
+      tags:
+      - queries
+  /v2/spec:
+    get:
+      description: |-
+        Returns a html of the API specification, using a Swagger UI.
+        See http://localhost:8000/v2/spec/index.html
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get OpenAPI Specification
+      tags:
+      - spec
+  /v2/users:
+    get:
+      consumes:
+      - application/json
+      description: Requester needs admin or curator roles.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.UserResponse'
+            type: array
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Get all users.
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Requester needs admin role.
+      parameters:
+      - description: User Request
+        in: body
+        name: userRequest
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UserPost'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Create new user.
+      tags:
+      - users
+  /v2/users/{userHandle}:
+    delete:
+      consumes:
+      - application/json
+      description: Requester needs admin role.
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Delete a user.
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Requester needs admin or curator roles.
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.UserResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Get a user.
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Update name, password and roles of a user.
+        Requester needs admin role.
+      parameters:
+      - description: User Handle
+        in: path
+        name: userHandle
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Error'
+      security:
+      - BearerTokenAuth: []
+      summary: Update a user.
+      tags:
+      - users
+securityDefinitions:
+  BearerTokenAuth:
+    type: basic
+swagger: "2.0"

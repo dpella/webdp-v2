@@ -1,0 +1,48 @@
+{
+    "dataset_id": 10,
+    "budget": {
+        "epsilon": 21.12,
+        "delta": 0.02
+    },
+    "query": [
+        {
+            "select": [
+                "name"
+            ]
+        },
+        {
+            "count": {
+                "column": "name",
+                "mech": "Laplace",
+                "budget": {
+                    "epsilon": 10,
+                    "delta": 0.01
+                }
+            }
+        }
+    ],
+    "privacy_notion": "APPROXDP",
+    "data": "bmFtZSxhZ2Usb2NjdXBhdGlvbgpkYXZpZCwzMCxzdHVkZW50CnNhbXVlbCwyOSxzdHVkZW50CnNpbW9uLDI4LHN0dWRlbnQKYWRhbSwyNyxzdHVkZW50CmJlbmphbWluLDI2LHN0dWRlbnQK==",
+    "schema": [
+        {
+            "name": "name",
+            "type": {
+                "name": "String"
+            }
+        },
+        {
+            "name": "age",
+            "type": {
+                "name": "Int",
+                "low": 1,
+                "high": 100
+            }
+        },
+        {
+            "name": "occupation",
+            "type": {
+                "name": "String"
+            }
+        }
+    ]
+}

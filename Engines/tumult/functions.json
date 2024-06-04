@@ -1,0 +1,78 @@
+{
+    "rename": {
+        "enabled": true,
+        "required_fields": {
+            "column_mapper": "A mapping of columns to new column names. Columns not specified in the mapper will remain the same."
+        }
+    },
+    "filter": {
+        "enabled": true,
+        "required_fields": {
+            "array": "an array of strings of SQL expressions specifying the filter to apply to the data. For example, the string “A > B” matches rows where column A is greater than column B"
+        }
+    },
+    "select": {
+        "enabled": true,
+        "required_fields": {
+            "columns": "the columns to select, in a list"
+        }
+    },
+    "map": {
+        "enabled": true,
+        "required_fields": {
+            "f": "(Callable[[Row], Row]) – The function to be applied to each row. The function’s input is a dictionary matching each column name to its value for that row. This function should return a dictionary, which should always have the same keys regardless of input, and the values in that dictionary should match the column type specified in new_column_types. The function should not have any side effects (in particular, f cannot raise exceptions).",
+            "new_column_types": "(Mapping[str, Union[tmlt.analytics._schema.ColumnDescriptor, tmlt.analytics._schema.ColumnType]]) – Mapping from column names to types, for new columns produced by f. Using ColumnDescriptor is preferred."
+        }
+    },
+    "bin": {
+        "enabled": true,
+        "required_fields": {
+            "column": " Name of the column used to assign bins.",
+            "spec": "A BinningSpec that defines the binning operation to be performed.",
+            "name": "The name of the column that will be created. If None (the default), the input column name with _binned appended to it."
+        }
+    },
+    "groupby": {
+        "enabled": true,
+        "required_fields": {
+            "keys": " A KeySet giving the set of groupby keys to be used when performing an aggregation."
+        }
+    },
+    "count": {
+        "enabled": true,
+        "required_fields": {
+            "mech": " Choice of noise mechanism. By default, the framework automatically selects an appropriate mechanism."
+        },
+        "optional_fields": {
+            "column": "The column to count",
+            "name": "(Optional[str]) – Name for the resulting aggregation column. Defaults to “count”."
+        }
+    },
+    "min": {
+        "enabled": true,
+        "required_fields": {
+            "column": "The column to compute the quantile over.",
+            "name": "The name to give the resulting aggregation column. Defaults to f'{column}_min'."
+        }
+    },
+    "max": {
+        "enabled": true,
+        "required_fields": {
+            "column": "The column to compute the quantile over."
+        }
+    },
+    "sum": {
+        "enabled": true,
+        "required_fields": {
+            "column": "The column to compute the quantile over.",
+            "mech": "Choice of noise mechanism. By default, the framework automatically selects an appropriate mechanism."
+        }
+    },
+    "mean": {
+        "enabled": true,
+        "required_fields": {
+            "column": "The column to compute the quantile over.",
+            "mech": "Choice of noise mechanism. By default, the framework automatically selects an appropriate mechanism."
+        }
+    }
+}

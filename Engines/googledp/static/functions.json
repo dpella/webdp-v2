@@ -1,0 +1,76 @@
+{
+    "filter": {
+        "enabled": true,
+        "required_fields": {
+            "key": "the key should be 'filter'", 
+            "value": "An array that contains predicates 'column < 20'"
+        }
+    },
+    "bin": {
+        "enabled": true,
+        "required_fields": {
+            "key": "the key name should be the column",
+            "value": "the value should be an array with ints that specify the bins"
+        }
+    },
+    "mean": {
+        "enabled": true,
+        "required_fields": {
+            "column": "which column in the dataset to measure",
+            "mech": "Laplace or Gaussian"
+        },
+        "optional_fields": {
+            "budget": "the budget requested for this measurement"
+        }
+    },
+    "sum": {
+        "enabled": true,
+        "required_fields": {
+            "column": "which column in the dataset to measure",
+            "mech": "Laplace or Gaussian"
+        },
+        "optional_fields": {
+            "budget": "the budget requested for this measurement"
+        }
+    },
+    "variance": {
+        "enabled": true,
+        "required_fields": {
+            "column": "which column in the dataset to measure",
+            "mech": "Laplace or Gaussian"
+        },
+        "optional_fields": {
+            "budget": "the budget requested for this measurement"
+        }
+    },
+    "stdev": {
+        "enabled": true,
+        "required_fields": {
+            "column": "which column in the dataset to measure",
+            "mech": "Laplace or Gaussian"
+        },
+        "optional_fields": {
+            "budget": "the budget requested for this measurement"
+        }
+    },
+    "quantiles": {
+        "enabled": true,
+        "required_fields": {
+            "column": "which column in the dataset to measure",
+            "mech": "Laplace or Gaussian"
+        },
+        "optional_fields": {
+            "budget": "the budget requested for this measurement"
+        }
+    },
+    "count": {
+        "enabled": true,
+        "required_fields": {
+            "column": "which column in the dataset to measure",
+            "mech": "Laplace or Gaussian"
+        },
+        "optional_fields": {
+            "budget": "the budget requested for this measurement"
+        }
+    }
+}

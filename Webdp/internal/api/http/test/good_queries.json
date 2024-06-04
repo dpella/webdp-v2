@@ -1,0 +1,41 @@
+[
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 1.0
+        },
+        "query" : [
+            {
+                "count" : {"budget" : {"epsilon" : 1.0}}
+            }
+        ]
+    },
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 1.0
+        },
+        "query" : [
+            {
+                "count" : {"budget" : {"epsilon" : 0.5}}
+            },
+            {
+                "count" : {"budget" : {"epsilon" : 0.5}}
+            }
+        ]
+    },
+    {
+        "dataset" : 1,
+        "budget"  : {
+            "epsilon" : 1.0, "delta" : 0.1
+        },
+        "query" : [
+            {
+                "count" : {"budget" : {"epsilon" : 0.5, "delta" : 0.1}}
+            },
+            {
+                "count" : {"budget" : {"epsilon" : 0.5}}
+            }
+        ]
+    }
+]

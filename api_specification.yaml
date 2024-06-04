@@ -1,0 +1,1413 @@
+openapi: 3.0.1
+
+# -----------------------------------
+
+info:
+  title: Webdp API - Reworked
+  version: "2.0"
+  description: "Welcome to the official OpenAPI documentation for WebDP, our versatile\
+    \ API designed to provide transparent interoperability with a range of differentially\
+    \ private frameworks."
+  license:
+    name: Mozilla Public License version 2.0
+    url: https://www.mozilla.org/en-US/MPL/2.0/
+
+# -----------------------------------
+
+servers:
+- url: //localhost:8000/
+
+# -----------------------------------
+
+security:
+  - BearerTokenAuth: [] # Throughout the API
+
+# -----------------------------------
+
+paths:
+  # Login/logout
+
+  /v1/login:
+    post:
+      tags:
+      - auth
+      summary: Login User
+      description: Login user with user/password credentials.
+      security: []
+      requestBody:
+        description: Login Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handlers.TokenResponse'
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: loginRequest
+  /v1/logout:
+    post:
+      tags:
+      - auth
+      summary: Logout User
+      description: Logout user from session.
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+  /v2/login:
+    post:
+      tags:
+      - auth
+      summary: Login User
+      description: Login user with user/password credentials.
+      security: []
+      requestBody:
+        description: Login Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.LoginRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/handlers.TokenResponse'
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: loginRequest
+  /v2/logout:
+    post:
+      tags:
+      - auth
+      summary: Logout User
+      description: Logout user from session.
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+
+  # Users
+
+  /v1/users:
+    get:
+      tags:
+      - users
+      summary: Get all users.
+      description: Requester needs admin or curator roles.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/entity.UserResponse'
+        default:
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+      - users
+      summary: Create new user.
+      description: Requester needs admin role.
+      requestBody:
+        description: User Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.UserPost'
+        required: true
+      responses:
+        "201":
+          description: Created
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: userRequest
+  /v1/user/{userHandle}:
+    get:
+      tags:
+      - users
+      summary: Get a user.
+      description: Requester needs admin or curator roles.
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.UserResponse'
+        default:
+          $ref: "#/components/responses/Error"
+    delete:
+      tags:
+      - users
+      summary: Delete a user.
+      description: Requester needs admin role.
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      tags:
+      - users
+      summary: Update a user.
+      description: |-
+        Update name, password and roles of a user.
+        Requester needs admin role.
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+  /v2/users:
+    get:
+      tags:
+      - users
+      summary: Get all users.
+      description: Requester needs admin or curator roles.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/entity.UserResponse'
+        default:
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+      - users
+      summary: Create new user.
+      description: Requester needs admin role.
+      requestBody:
+        description: User Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.UserPost'
+        required: true
+      responses:
+        "201":
+          description: Created
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: userRequest
+  /v2/users/{userHandle}:
+    get:
+      tags:
+      - users
+      summary: Get a user.
+      description: Requester needs admin or curator roles.
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.UserResponse'
+        default:
+          $ref: "#/components/responses/Error"
+    delete:
+      tags:
+      - users
+      summary: Delete a user.
+      description: Requester needs admin role.
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      tags:
+      - users
+      summary: Update a user.
+      description: |-
+        Update name, password and roles of a user.
+        Requester needs admin role.
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+
+  # Datasets
+
+  /v1/datasets:
+    get:
+      tags:
+      - datasets
+      summary: Gets all datasets which requester has access to.
+      description: "Requester needs role admin or curator, or needs granted access\
+        \ via budget allocation."
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/entity.DatasetInfo'
+        default:
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+      - datasets
+      summary: Creates a dataset.
+      description: Requester needs role curator. New owner of dataset needs role curator.
+      requestBody:
+        description: request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.DatasetCreate'
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.Id'
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: requestBody
+  /v1/dataset/{datasetId}:
+    get:
+      tags:
+      - datasets
+      summary: Gets all datasets which requester has access to.
+      description: "Requester needs role admin or curator, or needs granted access\
+        \ via budget allocation."
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.DatasetInfo'
+        default:
+          $ref: "#/components/responses/Error"
+    delete:
+      tags:
+      - datasets
+      summary: Delete a dataset.
+      description: Requester needs to be the owner of the dataset.
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      tags:
+      - datasets
+      summary: Update a dataset.
+      description: |-
+        Update name, owner or total budget of a dataset.
+        Requester needs to be curator and owner of the dataset.
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.DatasetCreate'
+        required: true
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: requestBody
+  /v1/dataset/{datasetId}/upload:
+    post:
+      tags:
+      - datasets
+      summary: Upload a dataset.
+      description: Requester needs to be the owner of the dataset.
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: CSV Data
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: csvData
+  /v2/datasets:
+    get:
+      tags:
+      - datasets
+      summary: Gets all datasets which requester has access to.
+      description: "Requester needs role admin or curator, or needs granted access\
+        \ via budget allocation."
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/entity.DatasetInfo'
+        default:
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+      - datasets
+      summary: Creates a dataset.
+      description: Requester needs role curator. New owner of dataset needs role curator.
+      requestBody:
+        description: request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.DatasetCreate'
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.Id'
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: requestBody
+  /v2/datasets/{datasetId}:
+    get:
+      tags:
+      - datasets
+      summary: Gets all datasets which requester has access to.
+      description: "Requester needs role admin or curator, or needs granted access\
+        \ via budget allocation."
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.DatasetInfo'
+        default:
+          $ref: "#/components/responses/Error"
+    delete:
+      tags:
+      - datasets
+      summary: Delete a dataset.
+      description: Requester needs to be the owner of the dataset.
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      tags:
+      - datasets
+      summary: Update a dataset.
+      description: |-
+        Update name, owner or total budget of a dataset.
+        Requester needs to be curator and owner of the dataset.
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.DatasetCreate'
+        required: true
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: requestBody
+  /v2/datasets/{datasetId}/upload:
+    post:
+      tags:
+      - datasets
+      summary: Upload a dataset.
+      description: Requester needs to be the owner of the dataset.
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: CSV Data
+        content:
+          application/json:
+            schema:
+              type: string
+        required: true
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: csvData
+
+  # Budgets
+  
+  /v1/budget/dataset/{datasetId}:
+    get:
+      tags:
+      - budgets
+      summary: Gets dataset budget for a dataset
+      description: Gets the dataset budget allocation
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.DatasetBudgetAllocationResponse'
+        default:
+          $ref: "#/components/responses/Error"
+  /v1/budget/user/{userHandle}:
+    get:
+      tags:
+      - budgets
+      summary: Get budgets for user
+      description: Gets all budgets that are allocated to the user
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/entity.UserBudgetsResponse'
+        default:
+          $ref: "#/components/responses/Error"
+  /v1/budget/allocation/{userHandle}/{datasetId}:
+    get:
+      tags:
+      - budgets
+      summary: Gets user budget on a dataset
+      description: Gets the specified users budget on a specific dataset
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.Budget'
+        default:
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+      - budgets
+      summary: Adds a user budget on a dataset
+      description: Adds a user budget on a dataset
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.Budget'
+        required: true
+      responses:
+        "201":
+          description: Created
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: requestBody
+    delete:
+      tags:
+      - budgets
+      summary: Deletes budget for user and dataset.
+      description: Deletes budget for user and dataset.
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      tags:
+      - budgets
+      summary: Update a user budget on a dataset
+      description: Update a user budget on a dataset
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.Budget'
+        required: true
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: requestBody
+  /v2/budgets/datasets/{datasetId}:
+    get:
+      tags:
+      - budgets
+      summary: Gets dataset budget for a dataset
+      description: Gets the dataset budget allocation
+      parameters:
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.DatasetBudgetAllocationResponse'
+        default:
+          $ref: "#/components/responses/Error"
+  /v2/budgets/users/{userHandle}:
+    get:
+      tags:
+      - budgets
+      summary: Get budgets for user
+      description: Gets all budgets that are allocated to the user
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/entity.UserBudgetsResponse'
+        default:
+          $ref: "#/components/responses/Error"
+  /v2/budgets/allocations/{userHandle}/{datasetId}:
+    get:
+      tags:
+      - budgets
+      summary: Gets user budget on a dataset
+      description: Gets the specified users budget on a specific dataset
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.Budget'
+        default:
+          $ref: "#/components/responses/Error"
+    post:
+      tags:
+      - budgets
+      summary: Adds a user budget on a dataset
+      description: Adds a user budget on a dataset
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.Budget'
+        required: true
+      responses:
+        "201":
+          description: Created
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: requestBody
+    delete:
+      tags:
+      - budgets
+      summary: Deletes budget for user and dataset.
+      description: Deletes budget for user and dataset.
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+    patch:
+      tags:
+      - budgets
+      summary: Update a user budget on a dataset
+      description: Update a user budget on a dataset
+      parameters:
+      - name: userHandle
+        in: path
+        description: User Handle
+        required: true
+        schema:
+          type: string
+      - name: datasetId
+        in: path
+        description: Dataset Id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.Budget'
+        required: true
+      responses:
+        "204":
+          description: No Content
+          content: {}
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: requestBody
+  
+  # Queries
+
+  /v1/query/evaluate:
+    post:
+      tags:
+      - queries
+      summary: Do a query evaluation
+      description: |-
+        Request a query evaluation on a specific dataset.
+        Requester must be curator or analyst.
+      parameters:
+      - name: engine
+        in: query
+        description: engine name
+        schema:
+          type: string
+      requestBody:
+        description: Query Evaluation Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.QueryEvaluate'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.QueryResult'
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: queryEvaluate
+  /v1/query/accuracy:
+    post:
+      tags:
+      - queries
+      summary: Check a query's accuracy
+      description: |-
+        Request query accuracy on a specific dataset.
+        Requester must be curator or analyst.
+      parameters:
+      - name: engine
+        in: query
+        description: engine name
+        schema:
+          type: string
+      requestBody:
+        description: Query Accuracy Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.QueryAccuracy'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: number
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: queryAccuracy
+  /v1/query/custom:
+    post:
+      tags:
+      - queries
+      summary: Do a custom query (not implemented)
+      description: Custom query on a specific dataset
+      requestBody:
+        description: Query Custom Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.QueryCustom'
+        required: true
+      responses:
+        "501":
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.Error'
+      x-codegen-request-body-name: queryCustom
+  /v2/queries/evaluate:
+    post:
+      tags:
+      - queries
+      summary: Do a query evaluation
+      description: |-
+        Request a query evaluation on a specific dataset.
+        Requester must be curator or analyst.
+      parameters:
+      - name: engine
+        in: query
+        description: engine name
+        schema:
+          type: string
+      requestBody:
+        description: Query Evaluation Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.QueryEvaluate'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/entity.QueryResult'
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: queryEvaluate
+  /v2/queries/accuracy:
+    post:
+      tags:
+      - queries
+      summary: Check a query's accuracy
+      description: |-
+        Request query accuracy on a specific dataset.
+        Requester must be curator or analyst.
+      parameters:
+      - name: engine
+        in: query
+        description: engine name
+        schema:
+          type: string
+      requestBody:
+        description: Query Accuracy Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.QueryAccuracy'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: number
+        default:
+          $ref: "#/components/responses/Error"
+      x-codegen-request-body-name: queryAccuracy
+  /v2/queries/docs:
+    get:
+      tags:
+      - queries
+      summary: Get engine query documentation
+      description: |-
+        Returns a markdown file with features for each engine
+        or single engine if specified in query param
+      parameters:
+      - name: engine
+        in: query
+        description: engine name
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            text/markdown:
+              schema:
+                type: array
+                items:
+                  type: integer
+        default:
+          $ref: "#/components/responses/Error"
+  /v2/queries/engines:
+    get:
+      tags:
+      - queries
+      summary: List available engines
+      description: Returns a list of available engines.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          $ref: "#/components/responses/Error"
+  /v2/queries/functions:
+    get:
+      tags:
+      - queries
+      summary: List engine functions
+      description: |-
+        Returns a json with supported functions for each engine
+        or single engine if specified in query param
+      parameters:
+      - name: engine
+        in: query
+        description: engine name
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response.EngineFunctions'
+        default:
+          $ref: "#/components/responses/Error"
+  /v2/queries/validate:
+    post:
+      tags:
+      - queries
+      summary: Validate a query
+      description: |-
+        Validate a query's syntax.
+        Requester must be curator or analyst.
+      parameters:
+      - name: engine
+        in: query
+        description: engine name
+        schema:
+          type: string
+      requestBody:
+        description: Query Evaluation Request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/entity.QueryEvaluate'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/client.ValidateResponse'
+        default:
+          $ref: "#/components/responses/Error"
+      security:
+      - BearerTokenAuth: []
+      x-codegen-request-body-name: queryEvaluate
+  
+  # Specification
+
+  /v2/spec:
+    get:
+      tags:
+      - spec
+      summary: Get OpenAPI Specification
+      security: []
+      description: |-
+        Returns a html of the API specification, using a Swagger UI.
+        See http://localhost:8000/v2/spec/index.html
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties: true
+  
+
+# -----------------------------------
+
+components:
+  # Responses
+  responses:
+    Error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/response.Error"
+
+  # Schemas
+  schemas:
+    client.ValidateResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        valid:
+          type: boolean
+    entity.Budget:
+      type: object
+      properties:
+        delta:
+          type: number
+        epsilon:
+          type: number
+    entity.ColumnSchema:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/entity.DataType'
+    entity.DataType:
+      type: object
+      properties:
+        type:
+          type: object
+    entity.DatasetBudgetAllocationResponse:
+      type: object
+      properties:
+        allocated:
+          $ref: '#/components/schemas/entity.Budget'
+        allocation:
+          type: array
+          items:
+            $ref: '#/components/schemas/entity.UserBudgetModel'
+        consumed:
+          $ref: '#/components/schemas/entity.Budget'
+        total:
+          $ref: '#/components/schemas/entity.Budget'
+    entity.DatasetCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        owner:
+          type: string
+        privacy_notion:
+          type: string
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/entity.ColumnSchema'
+        total_budget:
+          $ref: '#/components/schemas/entity.Budget'
+    entity.DatasetInfo:
+      type: object
+      properties:
+        created_time:
+          type: string
+        id:
+          type: integer
+        loaded:
+          type: boolean
+        loaded_time:
+          type: string
+        name:
+          type: string
+        owner:
+          type: string
+        privacy_notion:
+          type: string
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/entity.ColumnSchema'
+        total_budget:
+          $ref: '#/components/schemas/entity.Budget'
+        updated_time:
+          type: string
+    entity.LoginRequest:
+      type: object
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+    entity.Query:
+      type: object
+      properties:
+        querySteps:
+          type: array
+          items:
+            type: object
+    entity.QueryAccuracy:
+      type: object
+      properties:
+        budget:
+          $ref: '#/components/schemas/entity.Budget'
+        confidence:
+          type: number
+        dataset:
+          type: integer
+        query:
+          $ref: '#/components/schemas/entity.Query'
+    entity.QueryCustom:
+      type: object
+      properties:
+        budget:
+          $ref: '#/components/schemas/entity.Budget'
+        dataset:
+          type: integer
+        query:
+          type: string
+    entity.QueryEvaluate:
+      type: object
+      properties:
+        budget:
+          $ref: '#/components/schemas/entity.Budget'
+        dataset:
+          type: integer
+        query:
+          $ref: '#/components/schemas/entity.Query'
+    entity.QueryResult:
+      type: object
+      additionalProperties: true
+    entity.UserBudgetModel:
+      type: object
+      properties:
+        allocated:
+          $ref: '#/components/schemas/entity.Budget'
+        consumed:
+          $ref: '#/components/schemas/entity.Budget'
+        user:
+          type: string
+    entity.UserBudgetsResponse:
+      type: object
+      properties:
+        allocated:
+          $ref: '#/components/schemas/entity.Budget'
+        consumed:
+          $ref: '#/components/schemas/entity.Budget'
+        dataset:
+          type: integer
+    entity.UserPost:
+      type: object
+      properties:
+        handle:
+          type: string
+        name:
+          type: string
+        password:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    entity.UserResponse:
+      type: object
+      properties:
+        created_time:
+          type: string
+        handle:
+          type: string
+        name:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        updated_time:
+          type: string
+    handlers.TokenResponse:
+      type: object
+      additionalProperties:
+        type: string
+    response.AllFunctions:
+      type: object
+      properties:
+        engine1:
+          $ref: '#/components/schemas/response.EngineFunctions'
+        engine2:
+          $ref: '#/components/schemas/response.EngineFunctions'
+    response.EngineFunctions:
+      type: object
+      properties:
+        feature1:
+          $ref: '#/components/schemas/response.Function'
+        feature2:
+          $ref: '#/components/schemas/response.Function'
+        feature3:
+          $ref: '#/components/schemas/response.Function'
+    response.Error:
+      description: An error message
+      type: object
+      properties:
+        detail:
+          type: string
+        status:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+    response.Function:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        optional_fields:
+          type: object
+          properties:
+            options:
+              type: string
+        required_fields:
+          type: object
+          properties:
+            options:
+              type: string
+    response.Id:
+      type: object
+      properties:
+        id:
+          type: integer
+  securitySchemes:
+    BearerTokenAuth:
+      type: http
+      scheme: basic
