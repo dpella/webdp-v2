@@ -131,7 +131,7 @@ We are a team of students from the Department of Computer Science and Engineerin
 - [BENJAMIN HEDE](https://github.com/hedeben)
 - [ADAM NORBERG](https://github.com/Adam-Norberg)
 - [SIMON PORSGAARD](https://github.com/doktorjevsky)
-- SAMUEL RUNMARK THUNELL
+- [SAMUEL RUNMARK THUNELL](https://github.com/smuuule)
 
 ## License
 
