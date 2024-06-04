@@ -6,7 +6,7 @@ A connector acts as a middle man between WebDP and the DP library. It reads and 
 
 Once the docker is running, you can get a better overview of what endpoints a connector must implement by viewing the API specification at the following address:
 
-http://localhost:8000/v2/spec/index.html
+http://localhost:8080/v2/spec/index.html
 
 ## Query endpoints
 The following endpoint(s) queries to either a specified engine, or all engines. You can find format of the requests WebDP sends to the engines and the format of the response it expects back in the demos.

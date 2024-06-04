@@ -32,7 +32,7 @@ def test_logout(make_test_env, headers_no_auth):
         json=login_request,
     )
     assert response_login.status_code == 200
-    test_user_JWT = response_login.json()["token"]
+    test_user_JWT = response_login.json()["jwt"]
 
     # Loggin out
     headers_user_auth = {

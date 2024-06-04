@@ -11,12 +11,12 @@ services:
       context: ./Webdp
       dockerfile: deployment/Dockerfile
     ports:
-      - 8000:8000
+      - 8080:8080
     expose:
-      - "8001"
+      - "8081"
     environment:
-      - PORT=8000
-      - INTERNAL_PORT=8001
+      - PORT=8080
+      - INTERNAL_PORT=8081
       - CONFIG_PATH=/dpconfig/config.json
       - DB_HOST=postgres
       - DB_PORT=5432

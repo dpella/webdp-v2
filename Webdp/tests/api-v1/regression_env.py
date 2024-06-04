@@ -21,7 +21,7 @@ import pytest
 import requests
 import platform
 
-URL = lambda endpoint: f"http://localhost:8000/v1/{endpoint}"
+URL = lambda endpoint: f"http://localhost:8080/v1/{endpoint}"
 
 loginjson = lambda user, pwd: {"username": f"{user}", "password": f"{pwd}"}
 PureDP    = lambda epsilon : {"epsilon": epsilon}

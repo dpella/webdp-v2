@@ -43,7 +43,7 @@ There is an endpoint for viewing the API specification:
 
 Once docker is running, you may view the API specification wrapped in a Swagger UI by visiting
 
-http://localhost:8000/v2/spec/index.html
+http://localhost:8080/v2/spec/index.html
 
 The Version 1 API specification offers the same interface as the DPella Webdp.
 
@@ -124,6 +124,7 @@ You can read our project report [here](report/WebDP_report.pdf)
 ## FrontDP
 A frontend for WebDP has also been developed by another bachelors project group which you can find [here](https://github.com/dpella/frontdp).
 The v1 of this backend is fully compatible with FrontDP.
+To run the frontend with the backend all you need to do is first run the backend according the the [run instructions](#run-instructions). Then run the frontend according the the instructions present in the FrontDP README. Then login using the credentials in [run instructions](#run-instructions), or if you have changed the credentials as was recommended in [setup](#setup) use the new credentials that you provided.
 
 ## Who we are
 We are a team of students from the Department of Computer Science and Engineering at Chalmers University of Technology and University of Gothenburg. Our team consists of the following five members:

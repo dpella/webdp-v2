@@ -10,7 +10,7 @@
         },
         "version": "2.0"
     },
-    "host": "localhost:8000",
+    "host": "localhost:8080",
     "basePath": "/",
     "paths": {
         "/v1/budget/allocation/{userHandle}/{datasetId}": {
@@ -2262,7 +2262,7 @@
         },
         "/v2/spec": {
             "get": {
-                "description": "Returns a html of the API specification, using a Swagger UI.\nSee http://localhost:8000/v2/spec/index.html",
+                "description": "Returns a html of the API specification, using a Swagger UI.\nSee http://localhost:8080/v2/spec/index.html",
                 "tags": [
                     "spec"
                 ],

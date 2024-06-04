@@ -221,7 +221,7 @@ definitions:
       jwt:
         type: string
     type: object
-host: localhost:8000
+host: localhost:8080
 info:
   contact: {}
   description: Welcome to the official OpenAPI documentation for WebDP, our versatile
@@ -1695,7 +1695,7 @@ paths:
     get:
       description: |-
         Returns a html of the API specification, using a Swagger UI.
-        See http://localhost:8000/v2/spec/index.html
+        See http://localhost:8080/v2/spec/index.html
       responses:
         "200":
           description: OK

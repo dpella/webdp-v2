@@ -15,7 +15,7 @@ info:
 # -----------------------------------
 
 servers:
-- url: //localhost:8000/
+- url: //localhost:8080/
 
 # -----------------------------------
 
@@ -1157,7 +1157,7 @@ paths:
       security: []
       description: |-
         Returns a html of the API specification, using a Swagger UI.
-        See http://localhost:8000/v2/spec/index.html
+        See http://localhost:8080/v2/spec/index.html
       responses:
         "200":
           description: OK

@@ -2268,7 +2268,7 @@ const docTemplate = `{
         },
         "/v2/spec": {
             "get": {
-                "description": "Returns a html of the API specification, using a Swagger UI.\nSee http://localhost:8000/v2/spec/index.html",
+                "description": "Returns a html of the API specification, using a Swagger UI.\nSee http://localhost:8080/v2/spec/index.html",
                 "tags": [
                     "spec"
                 ],
@@ -2883,7 +2883,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "2.0",
-	Host:             "localhost:8000",
+	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Webdp API - Reworked",

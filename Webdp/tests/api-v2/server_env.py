@@ -2,7 +2,7 @@
 import platform
 
 
-URL = "http://localhost:8000/v2/"
+URL = "http://localhost:8080/v2/"
 
 URL_LOGIN               =                  URL + "login"
 URL_LOGOUT              =                  URL + "logout"
