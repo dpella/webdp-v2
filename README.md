@@ -6,7 +6,12 @@
 
 ## Project Description
 
-This project is part of a bachelor's thesis at [Chalmers University of Technology](https://chalmers.se) and [University of Gothenburg](https://gu.se), and aims to improve [WebDP](https://github.com/dpella/WebDP), a software application serving APIs for differential privacy operations on datasets, by extending its functionality to other DP engines and frameworks. 
+This project is part of a bachelor's thesis at [Chalmers University of Technology](https://chalmers.se) and [University of Gothenburg](https://gu.se), and aims to improve [WebDP](https://github.com/dpella/WebDP), a software application serving APIs for differential privacy operations on datasets, by extending its functionality to other DP engines and frameworks. You can read our project report [here](report/WebDP_report.pdf).
+
+## FrontDP
+A frontend for WebDP has also been developed by another bachelor's project group: [FrontDP](https://github.com/dpella/frontdp).
+The v1 of this backend is fully compatible with FrontDP.
+To run the frontend with the backend, all you need to do is first run the backend according the the [Run Instructions](#run-instructions). Then run the frontend according the the instructions present in the FrontDP README. Login using the credentials in [Run Instructions](#run-instructions), or if you have changed the credentials (as was recommended in [Setup](#setup)) use the new credentials that you provided.
 
 ## Run Instructions
 
@@ -14,13 +19,13 @@ To run webdp first make sure docker is running on your machine then in the root 
 ```
 docker-compose up
 ```
-This will spin up the postgres database, webdp api and engines.
+This will spin up the webdp api available at http://localhost:8080/ along with the database and engines.
 
 A user with credentials
 ```
 username: root, password: 123
 ```
-will be created which you can use to login, when logging in you will be sent a token which will be required to access all other endpoints
+will be created which you can use to login, when logging in you will be sent a token which will be required to access all other endpoints.
 
 ## Setup
 
@@ -117,14 +122,6 @@ There are two demos available. The first demo is examples of different queries r
 
 - [Demo 1](demo/demo.ipynb)
 - [Demo 2](demo/presentation_demo.ipynb)
-
-## Report
-You can read our project report [here](report/WebDP_report.pdf)
-
-## FrontDP
-A frontend for WebDP has also been developed by another bachelors project group which you can find [here](https://github.com/dpella/frontdp).
-The v1 of this backend is fully compatible with FrontDP.
-To run the frontend with the backend all you need to do is first run the backend according the the [run instructions](#run-instructions). Then run the frontend according the the instructions present in the FrontDP README. Then login using the credentials in [run instructions](#run-instructions), or if you have changed the credentials as was recommended in [setup](#setup) use the new credentials that you provided.
 
 ## Who we are
 We are a team of students from the Department of Computer Science and Engineering at Chalmers University of Technology and University of Gothenburg. Our team consists of the following five members:
